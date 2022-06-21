@@ -1,7 +1,6 @@
 import App from './App.vue'
 import uView from './uni_modules/vk-uview-ui';
 
-
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
@@ -15,6 +14,7 @@ Vue.use(uView);
 
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
+
 export function createApp() {
   const app = createSSRApp(App)
   app.use(uView);
@@ -24,3 +24,14 @@ export function createApp() {
 }
 
 // #endif
+
+//引入leancloud
+const AV = require('leancloud-storage');
+const { Query, User } = AV;
+
+//初始化leancloud
+// AV.init({
+//   appId: "9YsunT1salRS9dw4y0gPdgj8-gzGzoHsz",
+//   appKey: "cbTyCF6sMJApRTHjJ68R0Gqz",
+//   serverURL: "https://lab.mistletoe.top"
+// });

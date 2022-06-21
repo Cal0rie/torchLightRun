@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "leancloud-storage": "^4.12.2"
+  },
+  "devDependencies": {
+    "vite-plugin-require-transform": "^1.0.3"
+  }
+}
