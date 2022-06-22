@@ -4,6 +4,7 @@
 		<view class="text-area">
 			<text class="title">{{title}}</text>
 		</view>
+		<van-button type="success">成功按钮</van-button>
 	</view>
 </template>
 
