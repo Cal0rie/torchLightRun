@@ -24,6 +24,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/task/task",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/me/me",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationStyle":"custom",
@@ -34,6 +52,7 @@
 		
 	},
 	"tabBar": {
+		"height": "60px",
 		"borderStyle": "white",
 		"color": "#D0D2DC",
 		"selectedColor": "#F8D03B",
