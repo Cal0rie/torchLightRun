@@ -135,7 +135,7 @@
 		width: 100%;
 		top: 0;
 		position: fixed;
-		background-image: linear-gradient(to bottom right, #F8D03B, #FAA029);;
+		background-image: linear-gradient(to bottom right, #F8D03B, #FAA029);
 		height :20%;
 		z-index: -1;
 	}

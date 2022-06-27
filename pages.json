@@ -51,6 +51,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/release/release",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationStyle":"custom",

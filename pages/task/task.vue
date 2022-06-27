@@ -8,7 +8,7 @@
 				<map style="width: 100%; height: 100%;" :latitude="latitude" :longitude="longitude" :markers="covers">
 				</map>
 			</view> -->
-			<img style="z-index: -1;;width:450px;height:800px" src="/static/预览图.png">
+			<img class="map" src="/static/预览图.png">
 		<view @click="add">
 			<img style="z-index: 5;right:20px;
 			bottom:10px;position: absolute;width:80px;height:80px" src="/static/round_add_fill.png">
@@ -62,13 +62,22 @@
 				})
 			},
 			release(){		//发布
-				
+				uni.navigateTo({
+					url:"/pages/release/release"
+				})
 			}
 		}
 	}
 </script>
 
 <style scoped>
+	.map{
+		z-index: -1;
+		position: fixed;
+		width: 450px;
+		height: 800px;
+		transform: translateX(-35px);
+	}
 	.popup-head{
 		font-weight: bold;
 		font-size: 20px;
