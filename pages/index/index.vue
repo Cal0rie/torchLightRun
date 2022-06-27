@@ -3,7 +3,7 @@
 	<view class='content'>
 		
 			<view class='head-content'>
-				<u-button shape="circle" class="weather">
+				<u-button style="border-style: none;height: 64rpx;" :hair-line="false" shape="circle" class="weather">
 					<u-icon style="margin-right: 5px;" size="40" name="/static/浓云.png"></u-icon>早上好</u-button>
 				<u-search :show-action="showSearch" class='search' shape="round"></u-search>
 				<u-icon style="margin-left: 10px;" size="45" name="/static/签到.png"></u-icon>
