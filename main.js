@@ -17,11 +17,13 @@ import { createSSRApp } from 'vue'
 
 //vant
 import { Button } from 'vant';
+import { Search } from 'vant'
 
 export function createApp() {
   const app = createSSRApp(App)
   app.use(uView);
   app.use(Button);
+  app.use(Search)
   return {
     app
   }
