@@ -111,7 +111,7 @@
 		width: 85%;
 		height: 120px;
 		border-radius: 20px;
-		box-shadow: 2px 2px 4px 1px #888888;
+		box-shadow: 2px 2px 4px 1px #d5d5d5;
 	}
 	.swiper{
 		width: 90%;
