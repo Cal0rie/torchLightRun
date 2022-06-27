@@ -42,6 +42,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/snatch/snatch",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationStyle":"custom",

@@ -65,7 +65,7 @@
 				this.loading = true //加载页开启
 				
 				//注册成功时处理
-				uni.navigateTo({
+				uni.switchTab({
 					url: '/pages/index/index'
 				})
 				this.loading = false

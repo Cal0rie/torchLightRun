@@ -66,19 +66,22 @@
 				this.$refs.uToast.show({
 					title: '登录成功',
 					type: 'success',
-					url: '/pages/index/index',
 					duration: 500,
 				})
-			},
-			retrievePas() {
-				this.$refs.uToast.show({
-					title: '正在开发中',
-					type: 'success',
-					duration: 2000,
+				uni.switchTab({
+					url: '/pages/index/index'
 				})
+			
+	},
+	retrievePas() {
+		this.$refs.uToast.show({
+			title: '正在开发中',
+			type: 'success',
+			duration: 2000,
+		})
 
-			}
-		}
+	}
+	}
 	}
 </script>
 

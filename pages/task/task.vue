@@ -57,7 +57,9 @@
 				this.show=true
 			},
 			snatch(){		//抢单
-				
+				uni.navigateTo({
+					url:"/pages/snatch/snatch"
+				})
 			},
 			release(){		//发布
 				
