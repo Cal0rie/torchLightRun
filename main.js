@@ -15,15 +15,19 @@ Vue.use(uView);
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
 
+
 //vant
 import { Button } from 'vant';
 import { Search } from 'vant'
+import { Dialog } from 'vant';
+import { ref } from 'vue';
 
 export function createApp() {
   const app = createSSRApp(App)
   app.use(uView);
   app.use(Button);
   app.use(Search)
+  app.use(Dialog);
   return {
     app
   }

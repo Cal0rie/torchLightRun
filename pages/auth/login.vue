@@ -3,7 +3,7 @@
 		<u-toast ref="uToast"></u-toast>
 		<view class="top"></view>
 		<view class="content">
-			<view class="title">欢迎登录校园积跑</view>
+			<view class="title">欢迎登录炬光积跑</view>
 			<input class="u-border-bottom" type="number" v-model="tel" placeholder="请输入账号" />
 			<input class="u-border-bottom" type="password" v-model="pas" placeholder="请输入密码" />
 
