@@ -41,7 +41,7 @@
 					<view class="content-title">截止时间</view>
 					<view class="content-content">{{popupContent.deadline}}</view>
 					<view class="content-title">预计重量</view>
-					<view class="content-content">{{popupContent.heavy}}
+					<view class="content-content">{{popupContent.heavy}}kg
 
 					</view>
 					<view class="content-reward">
