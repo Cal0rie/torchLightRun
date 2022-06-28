@@ -60,6 +60,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/chat/chat",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "聊天",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/chat/message",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "消息",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationStyle":"custom",
@@ -88,10 +106,10 @@
 			"text": "任务"
 		},
 		{
-			"pagePath": "pages/task/task",
+			"pagePath": "pages/chat/message",
 			"iconPath": "static/donut-chart-fill1.png",
 			"selectedIconPath": "static/donut-chart-fill.png",
-			"text": "探索"
+			"text": "消息"
 		},{
 			"pagePath": "pages/me/me",
 			"iconPath": "static/user-3-fill1.png",
