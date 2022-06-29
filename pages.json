@@ -78,6 +78,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/me/Released",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "已发布",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/me/Snatched",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "已抢单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationStyle":"custom",

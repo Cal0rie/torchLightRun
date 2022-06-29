@@ -9,13 +9,13 @@
 			</view>
 		</view>
 		<view class="data-board">
-			<view class="singleData">
+			<view class="singleData" @click="jumpReleased">
 				<view class="red">{{finishOrder}}</view>
-				<view class="gray">完成订单</view>
+				<view class="gray">已发布</view>
 			</view>
-			<view class="singleData">
+			<view class="singleData" @click="jumpSnatched">
 				<view class="red">{{settleOrder}}</view>
-				<view class="gray">结算订单</view>
+				<view class="gray">已抢单</view>
 			</view>
 			<view class="singleData">
 				<view class="red">{{income}}</view>
@@ -24,8 +24,8 @@
 		</view>
 		<view class="cell-board">
 			<u-cell-group :border="border">
-					<u-cell-item :arrow="true" icon="shopping-cart" title="代取订单"></u-cell-item>
-					<u-cell-item :arrow="true" icon="order" title="结算订单"></u-cell-item>
+					<u-cell-item :arrow="true" icon="shopping-cart" title="已发布" @click="jumpReleased"></u-cell-item>
+					<u-cell-item :arrow="true" icon="order" title="已抢单" @click="jumpSnatched"></u-cell-item>
 					<u-cell-item :arrow="true" icon="red-packet" title="我的钱包"></u-cell-item>
 					<u-cell-item :arrow="true" icon="rmb-circle" value="未保证" title="保证金"></u-cell-item>
 					<u-cell-item :arrow="true" icon="error-circle" title="帮助中心"></u-cell-item>
@@ -49,7 +49,16 @@
 			}
 		},
 		methods: {
-			
+			jumpReleased(){
+				uni.navigateTo({
+					url:"/pages/me/Released"
+				})
+			},
+			jumpSnatched(){
+				uni.navigateTo({
+					url:"/pages/me/Snatched"
+				})
+			},
 		}
 	}
 </script>
