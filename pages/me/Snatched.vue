@@ -72,6 +72,12 @@
 </template>
 
 <script>
+	const AV = require('leancloud-storage');
+	AV.init({
+		appId: "UqpXHTrOW0OBVh1IvuGowWuN-gzGzoHsz",
+		appKey: "HofTE9IcDA9Qmkg1wKqDy5vM",
+		serverURL: "https://uqpxhtro.lc-cn-n1-shared.com"
+	});
 	export default {
 		data() {
 			return {
@@ -82,65 +88,51 @@
 				popupContent: {}, //弹框中的对象
 
 				orders: [{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 1,
-						state: '已抢单',
+						releaseTime: "",
+						deadline: '',
+						releaseUser: "",
+						reward: "",
+						getLocation: '',
+						toLocation: '',
+						heavy: "",
+						state: '',
 					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 2,
-						state: '已取件'
-					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 3,
-						state: '已送达'
-					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 3,
-						state: '已完成'
-					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 3,
-						state: '已完成'
-					}
 				]
 			}
 		},
-		mounted() {
-			console.log(this.totalReward)
-			for (var i = 0; i < this.orders.length; i++) {
-				if (this.orders[i].state == '已完成') {
-					this.totalReward += this.orders[i].reward
+		beforeCreate() {
+			const query = new AV.Query('Packge');
+			query.equalTo('id', '0');
+			query.notEqualTo('state', '未抢单');
+			query.find().then((res) => {
+				// mine 是包含满足条件的 Student 对象的数组
+				console.log(res);
+				this.orders = res;
+				// console.log(this.orders);
+				for (let i = 0; i < res.length; i++) {
+					this.orders[i].getLocation = res[i].attributes.getLocation;
+					this.orders[i].toLocation = res[i].attributes.toLocation;
+					this.orders[i].deadline = res[i].attributes.deadline;
+					this.orders[i].releaseTime = res[i].attributes.releaseTime;
+					this.orders[i].heavy = res[i].attributes.heavy;
+					this.orders[i].reward = res[i].attributes.reward;
+					this.orders[i].state = res[i].attributes.state;
+					this.orders[i].releaseUser = res[i].attributes.releaseUser;
+					this.orders[i].taskID = res[i].id;
+				};
+			
+				console.log(this.orders);
+			
+			}).then(() => {
+				this.load = false
+				for (var i = 0; i < this.orders.length; i++) {
+					if (this.orders[i].state == '已完成') {
+						this.totalReward += this.orders[i].reward
+					}
 				}
-			}
+			});
+			
+			
 		},
 		methods: {
 			choose(e) {

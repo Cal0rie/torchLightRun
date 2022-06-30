@@ -58,48 +58,77 @@
 			</view>
 		</u-popup>
 		<u-toast ref="uToast" />
+		<u-loading show v-if='load'></u-loading>>
 	</view>
 </template>
 
 <script>
+	const AV = require('leancloud-storage');
+	AV.init({
+		appId: "UqpXHTrOW0OBVh1IvuGowWuN-gzGzoHsz",
+		appKey: "HofTE9IcDA9Qmkg1wKqDy5vM",
+		serverURL: "https://uqpxhtro.lc-cn-n1-shared.com"
+	});
 	export default {
 		data() {
 			return {
+				load: true,
 				showPopup: false,
 				popupContent: {},
 
 				orders: [
 					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 1,
+						releaseTime: "",
+						deadline: '',
+						releaseUser: "",
+						reward: '',
+						getLocation: '',
+						toLocation: '',
+						heavy: '',
 					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 2,
-					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 3
-					}
 				]
 			}
 		},
+		beforeCreate() {
+			const query = new AV.Query('Packge');
+			query.equalTo('id', '0');
+			query.equalTo('state', '未抢单');
+			query.find().then((res) => {
+				// mine 是包含满足条件的 Student 对象的数组
+				console.log(res);
+				this.orders = res;
+				// console.log(this.orders);
+				for (let i = 0; i < res.length; i++) {
+					this.orders[i].getLocation = res[i].attributes.getLocation;
+					this.orders[i].toLocation = res[i].attributes.toLocation;
+					this.orders[i].deadline = res[i].attributes.deadline;
+					this.orders[i].releaseTime = res[i].attributes.releaseTime;
+					this.orders[i].heavy = res[i].attributes.heavy;
+					this.orders[i].reward = res[i].attributes.reward;
+					this.orders[i].state = res[i].attributes.state;
+					this.orders[i].releaseUser = res[i].attributes.releaseUser;
+					this.orders[i].taskID = res[i].id;
+				};
+			
+				console.log(this.orders);
+			
+			}).then(() => {
+				this.load = false
+				for (var i = 0; i < this.orders.length; i++) {
+					if (this.orders[i].state == '已完成') {
+						this.totalReward += this.orders[i].reward
+					}
+				}
+			});
+			
+			
+		},
 		methods: {
+			jump(){
+				uni.switchTab({
+					url:"/pages/index/index"
+				})
+			},
 			choose(e) {
 				console.log(e)
 				this.popupContent = this.orders[e]
@@ -112,16 +141,22 @@
 				this.$refs.uToast.show({
 					title: '正在抢单',
 					type: 'primary',
-					duration: 2000,
+					duration: 500,
 				})
-				
-				//抢单成功时
-				this.$refs.uToast.show({
-						title: '抢单成功',
-						type: 'primary',
-						duration: 500,
+				const todo = AV.Object.createWithoutData("Packge", this.popupContent.taskID);
+				todo.set('state', '已抢单');
+				todo.save().then((res)=>{
+					this.$refs.uToast.show({
+							title: '抢单成功',
+							type: 'primary',
+							duration: 1000,
+						
+					})
+					setTimeout(this.jump(),"1000");
 					
 				})
+				//抢单成功时
+				
 				
 			},
 			call(){

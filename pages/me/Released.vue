@@ -10,11 +10,10 @@
 					<view class="location-text" style="color: #00bfbf">To</view>
 					<view>{{item.toLocation}}</view>
 					<view class="time">
-						{{item.releaseTime}}-{{item.deadline}}
+						{{item.releaseTime}}至{{item.deadline}}
 					</view>
 				</view>
-				<view class='reward'><text
-						style="color: #F0604D;font-size: 30px;">{{item.reward}}</text><text>积分</text>
+				<view class='reward'><text style="color: #F0604D;font-size: 30px;">{{item.reward}}</text><text>积分</text>
 					<view class='from'>{{item.state}}</view>
 				</view>
 
@@ -57,18 +56,29 @@
 
 			</view>
 			<view class='btns'>
-				<u-button :disabled="btnDisabled" @click="btn1" class='btn' shape="circle" type="primary">{{btnWord}}</u-button>
+				<u-button :disabled="btnDisabled" @click="btn1" class='btn' shape="circle" type="primary">{{btnWord}}
+				</u-button>
 				<u-button @click="call" class='btn' shape='circle' type='success'>联系抢单者</u-button>
 			</view>
 		</u-popup>
 		<u-toast ref="uToast" />
+		<u-loading show v-if="load"></u-loading>
 	</view>
 </template>
 
 <script>
+	const AV = require('leancloud-storage');
+	// const { Query, User } = AV;
+	// import AV from 'leancloud-storage';
+	AV.init({
+		appId: "UqpXHTrOW0OBVh1IvuGowWuN-gzGzoHsz",
+		appKey: "HofTE9IcDA9Qmkg1wKqDy5vM",
+		serverURL: "https://uqpxhtro.lc-cn-n1-shared.com"
+	});
 	export default {
 		data() {
 			return {
+				load: true,
 				btnWord: "",
 				btnDisabled: false,
 				showPopup: false,
@@ -131,16 +141,7 @@
 			}
 		},
 		beforeCreate() {
-			const AV = require('leancloud-storage');
-			const {
-				Query
-			} = AV;
-			// import AV from 'leancloud-storage';
-			AV.init({
-				appId: "UqpXHTrOW0OBVh1IvuGowWuN-gzGzoHsz",
-				appKey: "HofTE9IcDA9Qmkg1wKqDy5vM",
-				serverURL: "https://uqpxhtro.lc-cn-n1-shared.com"
-			});
+
 			const query = new AV.Query('Packge');
 			query.equalTo('id', '0');
 			query.find().then((res) => {
@@ -156,10 +157,14 @@
 					this.orders[i].heavy = res[i].attributes.heavy;
 					this.orders[i].reward = res[i].attributes.reward;
 					this.orders[i].state = res[i].attributes.state;
+					this.orders[i].releaseUser = res[i].attributes.releaseUser;
+					this.orders[i].taskID = res[i].id;
 				};
-				
+
 				console.log(this.orders);
-				
+
+			}).then(() => {
+				this.load = false
 			});
 		},
 		methods: {
@@ -172,15 +177,15 @@
 				this.showPopup = true
 			},
 			btn1() { //点击第一个按钮时的操作
-				switch (this.btnWord) {
+				const todo = AV.Object.createWithoutData("Packge", this.popupContent.taskID);
+				todo.set('state', '已完成');
+				todo.save();
+				this.orders[this.popupContent.id].state = '已完成'
+				this.showPopup = false
+				console.log(this.orders)
 
-					case "确认收货":
-						this.orders[this.popupContent.id].state = '已完成'
-						this.showPopup = false
-						console.log(this.orders)
-						break
 
-				}
+
 				this.btnChange()
 
 				// console.log(this.popupContent.id)
@@ -228,6 +233,10 @@
 						this.btnDisabled = true
 						break
 
+					case "未抢单":
+						this.btnWord = '等待抢单'
+						this.btnDisabled = true
+						break
 				}
 			}
 		},

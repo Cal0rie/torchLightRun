@@ -112,12 +112,13 @@
 				// 构建对象
 				const packge = new Packge();
 				// 为属性赋值
+				packge.set('releaseUser', "张三");
 				packge.set('getLocation', this.getLocation);
 				packge.set('toLocation', this.toLocation);
 				packge.set('deadline', this.deadline);
 				packge.set('releaseTime', this.releaseTime);
-				packge.set('heavy', this.heavy);
-				packge.set('reward', this.reward);
+				packge.set('heavy', Number(this.heavy));
+				packge.set('reward', Number(this.heavy));
 				packge.set('id', "0");
 				// 将对象保存到云端
 				packge.save().then((packge) => {
@@ -145,9 +146,7 @@
 			}
 			
 		},
-		mounted() {
-			
-		}
+
 	}
 </script>
 
