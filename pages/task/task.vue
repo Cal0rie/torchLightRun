@@ -1,14 +1,19 @@
 <template>
 	<view>
 		<view class='head'>
-			<u-switch style="margin-left: 25px;" active-color="#F8D03B" v-model="relax"></u-switch>
-			<u-icon style="margin-right: 25px;" size="50" name="/static/message.png"></u-icon>
+			<view style="display: flex;align-items: center;">
+			<u-switch style="margin-left: 25px;margin-right:12px" active-color="#F8D03B" v-model="relax"></u-switch>
+			<view v-if='!relax'>休息一下吧</view>
+			<view v-if='relax'>开始接单啦</view>
+			</view>
+			<u-icon style="margin-right: 25px;" size="50" name="/static/message.png" @click="jumpMessage"></u-icon>
 		</view>
 			<!-- <view class="page-section page-section-gap" >
 				<map style="width: 100%; height: 100%;" :latitude="latitude" :longitude="longitude" :markers="covers">
 				</map>
 			</view> -->
-			<img class="map" src="/static/预览图.png">
+			<img class="map" src="/static/map.jpg">
+			<u-icon style='bottom:50%;left:45%; position: absolute;width:45px' name="/static/position.png"></u-icon>
 		<view @click="add">
 			<img style="z-index: 5;right:20px;
 			bottom:10px;position: absolute;width:80px;height:80px" src="/static/round_add_fill.png">
@@ -65,6 +70,11 @@
 				uni.navigateTo({
 					url:"/pages/release/release"
 				})
+			},
+			jumpMessage(){
+				uni.switchTab({
+					url:'/pages/chat/message'
+				})
 			}
 		}
 	}
@@ -92,6 +102,7 @@
 	justify-content: space-between;
 	align-items: center;
 	background-color: white;
+	color: #9e9e9e;
 }
 .popup{
 	display: flex;
