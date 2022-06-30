@@ -68,7 +68,8 @@
 				showPopup: false,
 				popupContent: {},
 
-				orders: [{
+				orders: [
+					{
 						releaseTime: "今天16:25",
 						deadline: '今天18:00',
 						releaseUser: "张三",

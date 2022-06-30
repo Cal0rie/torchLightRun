@@ -35,13 +35,15 @@ export function createApp() {
 
 // #endif
 
+
 //引入leancloud
 const AV = require('leancloud-storage');
 const { Query, User } = AV;
 
 //初始化leancloud
 // AV.init({
-//   appId: "9YsunT1salRS9dw4y0gPdgj8-gzGzoHsz",
-//   appKey: "cbTyCF6sMJApRTHjJ68R0Gqz",
-//   serverURL: "https://lab.mistletoe.top"
+//   appId: "UqpXHTrOW0OBVh1IvuGowWuN-gzGzoHsz",
+//   appKey: "HofTE9IcDA9Qmkg1wKqDy5vM",
+//   serverURL: "https://uqpxhtro.lc-cn-n1-shared.com"
 // });
+

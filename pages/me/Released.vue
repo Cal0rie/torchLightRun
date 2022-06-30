@@ -13,7 +13,8 @@
 						{{item.releaseTime}}-{{item.deadline}}
 					</view>
 				</view>
-				<view class='reward'><text style="color: #F0604D;font-size: 30px;">{{item.reward}}</text><text>积分</text>
+				<view class='reward'><text
+						style="color: #F0604D;font-size: 30px;">{{item.reward}}</text><text>积分</text>
 					<view class='from'>{{item.state}}</view>
 				</view>
 
@@ -56,8 +57,7 @@
 
 			</view>
 			<view class='btns'>
-				<u-button :disabled="btnDisabled" @click="btn1" class='btn' shape="circle" type="primary">{{btnWord}}
-				</u-button>
+				<u-button :disabled="btnDisabled" @click="btn1" class='btn' shape="circle" type="primary">{{btnWord}}</u-button>
 				<u-button @click="call" class='btn' shape='circle' type='success'>联系抢单者</u-button>
 			</view>
 		</u-popup>
@@ -72,9 +72,8 @@
 				btnWord: "",
 				btnDisabled: false,
 				showPopup: false,
-				popupContent: {}, //弹框中的对象
-
-				orders: [{
+				popupContent: {
+					attributes: {
 						releaseTime: "今天16:25",
 						deadline: '今天18:00',
 						releaseUser: "张三",
@@ -84,50 +83,84 @@
 						heavy: 1,
 						state: '已抢单',
 					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 2,
-						state: '已取件'
-					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 3,
-						state: '已送达'
-					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 3,
-						state: '已完成'
-					},
-					{
-						releaseTime: "今天16:25",
-						deadline: '今天18:00',
-						releaseUser: "张三",
-						reward: 10,
-						getLocation: '望星运动场菜鸟驿站',
-						toLocation: '软件公寓3号楼801',
-						heavy: 3,
-						state: '已完成'
-					}
+
+				}, //弹框中的对象
+
+				orders: [
+					// {
+					// 	releaseTime: "今天16:25",
+					// 	deadline: '今天18:00',
+					// 	releaseUser: "张三",
+					// 	reward: 10,
+					// 	getLocation: '望星运动场菜鸟驿站',
+					// 	toLocation: '软件公寓3号楼801',
+					// 	heavy: 2,
+					// 	state: '已取件'
+					// },
+					// {
+					// 	releaseTime: "今天16:25",
+					// 	deadline: '今天18:00',
+					// 	releaseUser: "张三",
+					// 	reward: 10,
+					// 	getLocation: '望星运动场菜鸟驿站',
+					// 	toLocation: '软件公寓3号楼801',
+					// 	heavy: 3,
+					// 	state: '已送达'
+					// },
+					// {
+					// 	releaseTime: "今天16:25",
+					// 	deadline: '今天18:00',
+					// 	releaseUser: "张三",
+					// 	reward: 10,
+					// 	getLocation: '望星运动场菜鸟驿站',
+					// 	toLocation: '软件公寓3号楼801',
+					// 	heavy: 3,
+					// 	state: '已完成'
+					// },
+					// {
+					// 	releaseTime: "今天16:25",
+					// 	deadline: '今天18:00',
+					// 	releaseUser: "张三",
+					// 	reward: 10,
+					// 	getLocation: '望星运动场菜鸟驿站',
+					// 	toLocation: '软件公寓3号楼801',
+					// 	heavy: 3,
+					// 	state: '已完成'
+					// }
 				]
 			}
 		},
-		mounted() {
+		beforeCreate() {
+			const AV = require('leancloud-storage');
+			const {
+				Query
+			} = AV;
+			// import AV from 'leancloud-storage';
+			AV.init({
+				appId: "UqpXHTrOW0OBVh1IvuGowWuN-gzGzoHsz",
+				appKey: "HofTE9IcDA9Qmkg1wKqDy5vM",
+				serverURL: "https://uqpxhtro.lc-cn-n1-shared.com"
+			});
+			const query = new AV.Query('Packge');
+			query.equalTo('id', '0');
+			query.find().then((res) => {
+				// mine 是包含满足条件的 Student 对象的数组
+				console.log(res);
+				this.orders = res;
+				// console.log(this.orders);
+				for (let i = 0; i < res.length; i++) {
+					this.orders[i].getLocation = res[i].attributes.getLocation;
+					this.orders[i].toLocation = res[i].attributes.toLocation;
+					this.orders[i].deadline = res[i].attributes.deadline;
+					this.orders[i].releaseTime = res[i].attributes.releaseTime;
+					this.orders[i].heavy = res[i].attributes.heavy;
+					this.orders[i].reward = res[i].attributes.reward;
+					this.orders[i].state = res[i].attributes.state;
+				};
+				
+				console.log(this.orders);
+				
+			});
 		},
 		methods: {
 			choose(e) {

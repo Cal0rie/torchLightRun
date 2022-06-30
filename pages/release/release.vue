@@ -36,7 +36,17 @@
 </template>
 
 <script>
+	const AV = require('leancloud-storage');
+	// const { Query, User } = AV;
+	// import AV from 'leancloud-storage';
+	AV.init({
+	  appId: "UqpXHTrOW0OBVh1IvuGowWuN-gzGzoHsz",
+	  appKey: "HofTE9IcDA9Qmkg1wKqDy5vM",
+	  serverURL: "https://uqpxhtro.lc-cn-n1-shared.com"
+	});
+	
 	export default {
+		
 		data() {
 			return {
 				
@@ -84,11 +94,34 @@
 					duration: 1000,
 				})
 				
+				/*云服务*/
+				// 声明 class
+				const Packge = AV.Object.extend('Packge');
+				// 构建对象
+				const packge = new Packge();
+				// 为属性赋值
+				packge.set('getLocation', this.getLocation);
+				// console.log(`aaa:${this.getLocation}`)
+				packge.set('toLocation', this.toLocation);
+				// packge.set('deadline', this.deadline);
+				packge.set('heavy', this.heavy);
+				packge.set('reward', this.reward);
+				packge.set('id', "0");
+				// 将对象保存到云端
+				packge.save().then((packge) => {
+				  // 成功保存之后，执行其他逻辑
+				  console.log(`保存成功。objectId：${packge.id}`);
+				}, (error) => {
+				  // 异常处理
+				  console.log("fail");
+				});
+				
 					this.$refs.uToast.show({
 						title: '发布成功',
 						type: 'success',
 						duration: 1000,
 					})
+					
 				}
 				else{
 					this.$refs.uToast.show({
