@@ -13,7 +13,7 @@
 				<u-field :clearable="false" v-model="toLocation" label="收件地址" placeholder="请填写收件地址" style="margin-bottom: 10px;">
 				</u-field>
 				<view class="location-text" style="color: #F0604D">Time</view>
-				<u-field :clearable="false" v-model="deadlineView" label="截止时间" placeholder="请填写截止时间" style="margin-bottom: 10px;"
+				<u-field :clearable="false" v-model="deadline" label="截止时间" placeholder="请填写截止时间" style="margin-bottom: 10px;"
 					@click="this.timeShow=true">
 				</u-field>
 				<view class="location-text" style="color: #00bfbf">Heavy</view>
@@ -69,21 +69,33 @@
 			}
 		},
 		methods: {
-			getUnixTime(dateStr){		//将日期转换为时间戳
-			    var newstr = dateStr.replace(/-/g,'/'); 
-			    var date =  new Date(newstr); 
-			    var time_str = date.getTime().toString();
-			    return time_str.substr(0, 10);
+			//将num左补0为len长度的字符串
+			lpadNum(num, len) {
+			    var l = num.toString().length;
+			    while(l < len) {
+			        num = "0" + num;
+			        l++;
+			    }
+			    return num;
+			},
+			//将传入的Date格式化为"yyyyMMdd HH:mm:ss.SSS"
+			formatDate(d){
+			    var year = d.getFullYear();
+			    var month = d.getMonth() + 1;
+			    var day = d.getDate();
+			    var hours = d.getHours();
+			    var minutes = d.getMinutes();
+			    var seconds = d.getSeconds();
+			    var milliSeconds = d.getMilliseconds();
+			    var resStr = this.lpadNum(month, 2) +"-"+ this.lpadNum(day, 2) + " " + this.lpadNum(hours,2) + ":" + this.lpadNum(minutes,2);
+			    return resStr;
 			},
 			confirmTime(e) {
-				console.log("2022/"+e.month+'/'+e.day+" "+e.hour+":"+e.minute+":00")
-				var oldTime= this.getUnixTime("2022/"+e.month+'/'+e.day+" "+e.hour+":"+e.minute+":00")
 				
-				this.deadlineView=e.month+'/'+e.day+" "+e.hour+":"+e.minute		//显示为 月/日/时间 格式
+				this.deadline=e.month+'-'+e.day+" "+e.hour+":"+e.minute		//显示为 月/日/时间 格式
 				
-				this.deadline=oldTime			//保存为时间戳格式
 				console.log("截止时间保存为"+this.deadline)
-				this.releaseTime = Date.parse(new Date());		//保存发布时间为时间戳格式
+				this.releaseTime = this.formatDate(new Date());		//保存发布时间为时间戳格式
 				console.log("发布时间保存为"+this.releaseTime)
 			},
 			submit(){		//发布订单
@@ -101,9 +113,9 @@
 				const packge = new Packge();
 				// 为属性赋值
 				packge.set('getLocation', this.getLocation);
-				// console.log(`aaa:${this.getLocation}`)
 				packge.set('toLocation', this.toLocation);
-				// packge.set('deadline', this.deadline);
+				packge.set('deadline', this.deadline);
+				packge.set('releaseTime', this.releaseTime);
 				packge.set('heavy', this.heavy);
 				packge.set('reward', this.reward);
 				packge.set('id', "0");
