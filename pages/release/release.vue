@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<img class="map" src="/static/预览图.png">
+		<img class="map" src="/static/map.jpg">
 		<u-navbar title="发布订单"></u-navbar>
 		<img class="background" src="/static/me-background.png">
 
