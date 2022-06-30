@@ -144,6 +144,7 @@
 
 			const query = new AV.Query('Packge');
 			query.equalTo('id', '0');
+			query.ascending('state');
 			query.find().then((res) => {
 				// mine 是包含满足条件的 Student 对象的数组
 				console.log(res);

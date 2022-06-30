@@ -88,22 +88,22 @@
 				popupContent: {}, //弹框中的对象
 
 				orders: [{
-						releaseTime: "",
-						deadline: '',
-						releaseUser: "",
-						reward: "",
-						getLocation: '',
-						toLocation: '',
-						heavy: "",
-						state: '',
-					},
-				]
+					releaseTime: "",
+					deadline: '',
+					releaseUser: "",
+					reward: "",
+					getLocation: '',
+					toLocation: '',
+					heavy: "",
+					state: '',
+				}, ]
 			}
 		},
 		beforeCreate() {
 			const query = new AV.Query('Packge');
 			query.equalTo('id', '0');
 			query.notEqualTo('state', '未抢单');
+			query.ascending('state');
 			query.find().then((res) => {
 				// mine 是包含满足条件的 Student 对象的数组
 				console.log(res);
@@ -120,9 +120,9 @@
 					this.orders[i].releaseUser = res[i].attributes.releaseUser;
 					this.orders[i].taskID = res[i].id;
 				};
-			
+
 				console.log(this.orders);
-			
+
 			}).then(() => {
 				this.load = false
 				for (var i = 0; i < this.orders.length; i++) {
@@ -131,8 +131,8 @@
 					}
 				}
 			});
-			
-			
+
+
 		},
 		methods: {
 			choose(e) {
@@ -144,18 +144,26 @@
 				this.showPopup = true
 			},
 			btn1() { //点击第一个按钮时的操作
+				const todo = AV.Object.createWithoutData("Packge", this.popupContent.taskID);
 				switch (this.btnWord) {
 
 					case "取件完成":
-						this.orders[this.popupContent.id].state = '已取件'
-						this.showPopup = false
-						console.log(this.orders)
+
+						todo.set('state', '已取件');
+						todo.save().then((res) => {
+							this.orders[this.popupContent.id].state = '已取件'
+							this.showPopup = false
+							//console.log(this.orders)
+						})
 						break
 
 					case "送件完成":
-						this.orders[this.popupContent.id].state = '已送达'
-						this.showPopup = false
-						console.log(this.orders)
+						todo.set('state', '已送达');
+						todo.save().then((res) => {
+							this.orders[this.popupContent.id].state = '已送达'
+							this.showPopup = false
+							//console.log(this.orders)
+						})
 						break
 
 				}

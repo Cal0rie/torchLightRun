@@ -10,16 +10,16 @@
 		</view>
 		<view class="data-board">
 			<view class="singleData" @click="jumpReleased">
-				<view class="red">{{finishOrder}}</view>
+				<view class="red">{{released.length}}</view>
 				<view class="gray">已发布</view>
 			</view>
 			<view class="singleData" @click="jumpSnatched">
-				<view class="red">{{settleOrder}}</view>
+				<view class="red">{{snatched.length}}</view>
 				<view class="gray">已抢单</view>
 			</view>
 			<view class="singleData">
 				<view class="red">{{income}}</view>
-				<view class="gray">收入</view>
+				<view class="gray">积分</view>
 			</view>
 		</view>
 		<view class="cell-board">
@@ -36,6 +36,14 @@
 </template>
 
 <script>
+	const AV = require('leancloud-storage');
+	// const { Query, User } = AV;
+	// import AV from 'leancloud-storage';
+	AV.init({
+		appId: "UqpXHTrOW0OBVh1IvuGowWuN-gzGzoHsz",
+		appKey: "HofTE9IcDA9Qmkg1wKqDy5vM",
+		serverURL: "https://uqpxhtro.lc-cn-n1-shared.com"
+	});
 	export default {
 		data() {
 			return {
@@ -43,10 +51,61 @@
 				src: '/static/avatar.png',
 				userID: "无名",
 				userIntro:'该用户未设置简介',
-				finishOrder: 8,		//完成订单
-				settleOrder: 8,		//结算订单
+				released: [],
+				snatched: [],
 				income: "12.00",		//今日收入
 			}
+		},
+		beforeCreate() {
+		
+			const query = new AV.Query('Packge');
+			query.equalTo('id', '0');
+			query.ascending('state');
+			query.find().then((res) => {
+				// mine 是包含满足条件的 Student 对象的数组
+				console.log(res);
+				this.orders = res;
+				// console.log(this.orders);
+				for (let i = 0; i < res.length; i++) {
+					this.orders[i].getLocation = res[i].attributes.getLocation;
+					this.orders[i].toLocation = res[i].attributes.toLocation;
+					this.orders[i].deadline = res[i].attributes.deadline;
+					this.orders[i].releaseTime = res[i].attributes.releaseTime;
+					this.orders[i].heavy = res[i].attributes.heavy;
+					this.orders[i].reward = res[i].attributes.reward;
+					this.orders[i].state = res[i].attributes.state;
+					this.orders[i].releaseUser = res[i].attributes.releaseUser;
+					this.orders[i].taskID = res[i].id;
+				};
+				this.released = this.orders
+				console.log(this.orders);
+		
+			}).then(() => {
+				this.load = false
+			});
+			
+			const query1= new AV.Query('Packge');
+			query1.equalTo('id', '0');
+			query1.notEqualTo('state', '未抢单');
+			query1.ascending('state');
+			query1.find().then((res) => {
+				// mine 是包含满足条件的 Student 对象的数组
+				console.log(res);
+				this.orders = res;
+				// console.log(this.orders);
+				for (let i = 0; i < res.length; i++) {
+					this.orders[i].getLocation = res[i].attributes.getLocation;
+					this.orders[i].toLocation = res[i].attributes.toLocation;
+					this.orders[i].deadline = res[i].attributes.deadline;
+					this.orders[i].releaseTime = res[i].attributes.releaseTime;
+					this.orders[i].heavy = res[i].attributes.heavy;
+					this.orders[i].reward = res[i].attributes.reward;
+					this.orders[i].state = res[i].attributes.state;
+					this.orders[i].releaseUser = res[i].attributes.releaseUser;
+					this.orders[i].taskID = res[i].id;
+				};
+				this.snatched = this.orders
+				})
 		},
 		methods: {
 			jumpReleased(){

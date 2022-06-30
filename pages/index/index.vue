@@ -66,9 +66,9 @@
 					distance: "100m",
 				},
 				{
-					position:'天津工业大学',
+					position:'天津师范大学',
 					condition:'可预约',
-					distance: "100m",
+					distance: "600m",
 				}],		//预约信息数组
 			}
 		},

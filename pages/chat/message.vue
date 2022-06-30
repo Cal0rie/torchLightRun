@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar title="消息"></u-navbar>
+		<u-navbar :isBack="false" title="消息"></u-navbar>
 		<view class='card1'>
 			<view class='card1-message' style="margin-bottom: 8px;">
 				<img src='/static/通知消息.png' style="width: 150rpx;margin-right: 15px;">
