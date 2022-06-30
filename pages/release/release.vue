@@ -157,15 +157,16 @@
 	}
 
 	.card {
-		margin-left: 30px;
-		margin-right: 30px;
+		margin: auto;
 		padding: 20px;
 		display: flex;
 		justify-content: space-between;
 		background-color: white;
 		border-radius: 20px;
 		box-shadow: 1px 1px 7px 1px #d5d5d5;
-		position: fixed;
+		position: absolute; left: 50%;
+		transform: translate(-50%);
 		bottom: 100px;
+		width: 80%;
 	}
 </style>
