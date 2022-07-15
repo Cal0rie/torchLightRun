@@ -118,7 +118,7 @@
 				packge.set('deadline', this.deadline);
 				packge.set('releaseTime', this.releaseTime);
 				packge.set('heavy', Number(this.heavy));
-				packge.set('reward', Number(this.heavy));
+				packge.set('reward', Number(this.reward));
 				packge.set('id', "0");
 				// 将对象保存到云端
 				packge.save().then((packge) => {
